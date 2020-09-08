@@ -1,0 +1,8 @@
+prefix=/home/adrian/fremen_ws/install
+
+Name: fremen2dgrid
+Description: Description of fremen2dgrid
+Version: 0.3.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 

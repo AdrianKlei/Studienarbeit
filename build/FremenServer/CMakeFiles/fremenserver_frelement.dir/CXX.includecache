@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/adrian/fremen_ws/src/FremenServer/src/CFrelement.cpp
+CFrelement.h
+/home/adrian/fremen_ws/src/FremenServer/src/CFrelement.h
+
+/home/adrian/fremen_ws/src/FremenServer/src/CFrelement.h
+stdio.h
+-
+iostream
+-
+algorithm
+-
+math.h
+-
+string.h
+-
+stdint.h
+-
+CTimer.h
+/home/adrian/fremen_ws/src/FremenServer/src/CTimer.h
+
+/home/adrian/fremen_ws/src/FremenServer/src/CTimer.h
+sys/time.h
+-
+stdlib.h
+-
+

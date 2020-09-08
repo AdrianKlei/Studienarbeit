@@ -1,0 +1,2 @@
+FremenServer
+-DCATKIN_DEVEL_PREFIX=/home/adrian/fremen_ws/devel -DCMAKE_INSTALL_PREFIX=/home/adrian/fremen_ws/install -G Unix Makefiles

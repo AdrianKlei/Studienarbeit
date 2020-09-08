@@ -1,0 +1,8 @@
+prefix=/home/adrian/fremen_ws/install
+
+Name: fremenserver
+Description: Description of fremenserver
+Version: 0.3.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: roscpp message_runtime genmsg actionlib_msgs
