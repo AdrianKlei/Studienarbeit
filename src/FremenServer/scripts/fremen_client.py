@@ -159,7 +159,68 @@ def test_function():
 
 
     	#plt.savefig("Room_occupancy_one_days.png")
-    	plt.show()	
+    	plt.show()
+
+	#and now lets do everything for one week
+	locations_one_week = locations_min[0:10080]
+	print("Length of locations_one_week", len(locations_one_week))
+	unique_week, counts_week = np.unique(locations_one_week, return_counts=True)
+	dictionary_week = dict(zip(unique_week, counts_week))
+	number_appearances_week = np.zeros(10)
+
+	for room, appearances in dictionary_week.items():
+		number_appearances_week[int(room)] = appearances
+
+	#create an array for each room for one week, filled with 1 for occupancy and 0 for empty
+
+	print("Program check statement number 2")
+
+	master_bedroom_week = np.zeros(len(locations_one_week))
+	master_bathroom_week = np.zeros(len(locations_one_week))
+	living_room_week = np.zeros(len(locations_one_week))
+	kitchen_week = np.zeros(len(locations_one_week))
+	center_week = np.zeros(len(locations_one_week))
+	corridor_week = np.zeros(len(locations_one_week))
+	second_bedroom_week = np.zeros(len(locations_one_week))
+	office_week = np.zeros(len(locations_one_week))
+	second_bathroom_week = np.zeros(len(locations_one_week))
+	outside_week = np.zeros(len(locations_one_week))
+
+	idx = 0
+	for location in locations_one_week:
+		location = int(location)
+		print("Location")
+		print(location)
+		print("Index")
+		print(idx)
+		
+		if location == 0:
+			master_bedroom_week[idx] = 1
+		elif location == 1:
+			master_bathroom_week[idx] = 1
+		elif location == 2:
+			living_room_week[idx] = 1
+		elif location == 3:
+			kitchen_week[idx] = 1
+		elif location == 4:
+			center_week[idx] = 1
+		elif location == 5:
+			corridor_week[idx] = 1
+		elif location == 6:
+			second_bedroom_week[idx] = 1
+		elif location == 7:
+			office_week[idx] = 1
+		elif location == 8:
+			second_bathroom_week[idx] = 1
+		elif location == 9:
+			outside_week[idx] = 1
+		else:
+			print("Error")
+		idx += 1
+		
+	print(office.shape)
+	print(office)
+	print("Program check statement number 3")	
 
 if __name__ == '__main__':
 	rospy.init_node("fremen_client")
