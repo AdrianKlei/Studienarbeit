@@ -220,7 +220,34 @@ def test_function():
 		
 	print(office.shape)
 	print(office)
-	print("Program check statement number 3")	
+	print("Program check statement number 3")
+
+	dummy_array = np.arange(10080)
+
+	#create a plot for every room
+
+	fig_week, axs_week = plt.subplots(5,2)
+	fig_week.suptitle('Room occupancy for one week')
+	axs_week[0, 0].step(dummy_array, np.array(master_bedroom_week))
+	axs_week[0, 0].set_title('Master bedroom')
+	axs_week[0, 1].step(dummy_array, np.array(master_bathroom_week))
+	axs_week[0, 1].set_title('Master bathroom')
+	axs_week[1, 0].step(dummy_array, np.array(living_room_week))
+	axs_week[1, 0].set_title("Living room")
+	axs_week[1, 1].step(dummy_array, np.array(kitchen_week))
+	axs_week[1, 1].set_title("Kitchen")
+	axs_week[2, 0].step(dummy_array, np.array(center_week))
+	axs_week[2, 0].set_title("Center")
+	axs_week[2, 1].step(dummy_array, np.array(corridor_week))
+	axs_week[2, 1].set_title("Corridor")
+	axs_week[3, 0].step(dummy_array, np.array(second_bedroom_week))
+	axs_week[3, 0].set_title("Second bedroom")
+	axs_week[3, 1].step(dummy_array, np.array(office_week))
+	axs_week[3, 1].set_title("Office")
+	axs_week[4, 0].step(dummy_array, np.array(second_bathroom_week))
+	axs_week[4, 0].set_title("Second bathroom")
+	axs_week[4, 1].step(dummy_array, np.array(outside_week))
+	axs_week[4, 1].set_title("Outside)	
 
 if __name__ == '__main__':
 	rospy.init_node("fremen_client")
