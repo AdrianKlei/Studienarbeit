@@ -12,16 +12,24 @@ import numpy as np
 from matplotlib import pyplot as plt
 # here need to be inserted the dependencies for data analyzation such as numpy, matplotlib...
 
+test_master_bedroom = []
+
 class FremenClient:
 
 	def __init__(self):
+		self.master_bedroom_one_day = []
 		self._ac = actionlib.SimpleActionClient("/fremenserver", FremenAction)
 		self._ac.wait_for_server()
 		rospy.loginfo("fremenserver is up, we can send a new goal")
 
 	def send_goal_and_get_result(self):
 		goal = FremenGoal()
-		rospy.loginfo("Seems like no problems occured during creation of FremenGoal()")
+		rospy.loginfo("Seems like no problems occured during creation of FremenGoal(). Lets fill the message with values")
+		self.master_bedroom_one_day = np.array(self.master_bedroom_one_day, dtype=bool)
+		goal.operation = 'add'
+		goal.id = 'T'
+		goal.states = self.master_bedroom_one_day
+		
 
 	def callback_receive_stop_request(self, msg):
 		pass
@@ -131,6 +139,12 @@ def test_function():
 		idx += 1
 	print(office.shape)
 	print(office)
+	
+	#the master_bedroom array is saved to a global variable and the test_function terminates here
+	test_master_bedroom = master_bedroom
+	return master_bedroom
+	print("This print should not be displayed if everything works accordingly.")
+
 
 	dummy_array = np.arange(1440)
 	print("Test line before plotting the data.")
@@ -272,9 +286,11 @@ def test_function():
 if __name__ == '__main__':
 	rospy.init_node("fremen_client")
 	rospy.loginfo("The fremen_client_node has been started!")
-	#test_function()
+	master_bedroom_one_day = test_function()
 	client = FremenClient()
-	rospy.loginfo("Client has been constructed.")
+	client.master_bedroom_one_day = master_bedroom_one_day
+	rospy.loginfo("Client has been constructed. Master bedroom array has been copied.")
 	client.send_goal_and_get_result()
+
 	rospy.spin()
 
