@@ -18,17 +18,28 @@ class FremenClient:
 
 	def __init__(self):
 		self.master_bedroom_one_day = []
+		self.times_array = []
 		self._ac = actionlib.SimpleActionClient("/fremenserver", FremenAction)
 		self._ac.wait_for_server()
 		rospy.loginfo("fremenserver is up, we can send a new goal")
 
 	def send_goal_and_get_result(self):
+	#The main problem in this method is to cast the time and states-arrays to the corresponding types defined in the ros-message
 		goal = FremenGoal()
 		rospy.loginfo("Seems like no problems occured during creation of FremenGoal(). Lets fill the message with values")
 		self.master_bedroom_one_day = np.array(self.master_bedroom_one_day, dtype=bool)
+		self.times_array = self.times_array.astype(int) #transformation seems to have no effect at all
+		print("Type of times_array ", type(self.times_array))
 		goal.operation = 'add'
-		goal.id = 'T'
+		goal.id = 'pimmelberger'
 		goal.states = self.master_bedroom_one_day
+		goal.times = self.times_array
+		rospy.loginfo("All information has been written inside the fremen message.")
+		
+		#send the message to the fremenserver
+		self._ac.send_goal(goal, done_cb=self.done_callback,
+				feedback_cb=self.feedback_callback)
+		rospy.loginfo("Goal has been sent.")
 		
 
 	def callback_receive_stop_request(self, msg):
@@ -141,7 +152,7 @@ def test_function():
 	print(office)
 	
 	#the master_bedroom array is saved to a global variable and the test_function terminates here
-	test_master_bedroom = master_bedroom
+	test_master_bedroom = master_bedroom #can this line be deleted?
 	return master_bedroom
 	print("This print should not be displayed if everything works accordingly.")
 
@@ -286,9 +297,12 @@ def test_function():
 if __name__ == '__main__':
 	rospy.init_node("fremen_client")
 	rospy.loginfo("The fremen_client_node has been started!")
-	master_bedroom_one_day = test_function()
+	master_bedroom_one_day  = test_function()
 	client = FremenClient()
 	client.master_bedroom_one_day = master_bedroom_one_day
+	print(type(client.master_bedroom_one_day))
+	client.times_array = np.arange(1440)
+	print(type(client.times_array))
 	rospy.loginfo("Client has been constructed. Master bedroom array has been copied.")
 	client.send_goal_and_get_result()
 
