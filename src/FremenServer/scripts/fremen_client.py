@@ -20,6 +20,16 @@ class FremenClient:
 		rospy.loginfo("fremenserver is up, we can send a new goal")
 
 	def send_goal_and_get_result(self):
+		goal = FremenGoal()
+		rospy.loginfo("Seems like no problems occured during creation of FremenGoal()")
+
+	def callback_receive_stop_request(self, msg):
+		pass
+
+	def done_callback(self, status, result):
+		pass
+
+	def feedback_callback(self, feedback):
 		pass
 
 def test_function():
@@ -247,12 +257,24 @@ def test_function():
 	axs_week[4, 0].step(dummy_array, np.array(second_bathroom_week))
 	axs_week[4, 0].set_title("Second bathroom")
 	axs_week[4, 1].step(dummy_array, np.array(outside_week))
-	axs_week[4, 1].set_title("Outside)	
+	axs_week[4, 1].set_title("Outside")
+
+	for ax in axs_week.flat:
+		ax.set(xlabel='Time stamps', ylabel='Occupancy')
+
+	for ax in axs_week.flat:
+		ax.label_outer()
+
+	plt.show()	
+	print("Test finished")
+
 
 if __name__ == '__main__':
 	rospy.init_node("fremen_client")
 	rospy.loginfo("The fremen_client_node has been started!")
-	test_function()
+	#test_function()
 	client = FremenClient()
+	rospy.loginfo("Client has been constructed.")
+	client.send_goal_and_get_result()
 	rospy.spin()
 
